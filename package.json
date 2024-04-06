@@ -1,12 +1,20 @@
 {
   "name": "react-native-env-cli",
-  "version": "1.0.0",
+  "bin": {
+    "setup-env": "./dist/index.js"
+  },
+  "version": "0.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "link-cli": "yarn --global unlink react-native-env-cli && yarn --global link react-native-env-cli",
+    "dev": "tsc -w"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.12.5",
+    "typescript": "^5.4.4"
+  }
 }
