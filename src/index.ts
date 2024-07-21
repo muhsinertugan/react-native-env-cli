@@ -1,9 +1,8 @@
 #!/usr/bin/env node
 
 import { Command } from 'commander';
-import { TOOL_GROUPS } from './constants/index.js';
+import { checkEnvVariables } from './check/checkEnvVariables.js';
 import { checkVersion } from './check/checkVersion.js';
-import { ToolGroups } from './types/toolTypes.js';
 
 //declere the program
 
@@ -17,6 +16,10 @@ program
 	.version('0.0.1')
 	.action(async () => {
 		const versions = await checkVersion();
+		const envVariables = checkEnvVariables();
+
+		console.log('envVariables', envVariables);
+
 		console.log(versions);
 	});
 
