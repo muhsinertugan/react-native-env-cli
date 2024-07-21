@@ -8,7 +8,7 @@ type ToolGroups = {
 type ToolsType<ToolGroups> = {
 	[Property in keyof ToolGroups]: Record<
 		string,
-		Record<'command' | 'versionRange', string>
+		Record<'name' | 'command' | 'versionRange', string>
 	>;
 };
 

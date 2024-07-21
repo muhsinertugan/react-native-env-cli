@@ -12,46 +12,56 @@ const TOOL_GROUPS: ToolGroups = {
 const TOOLS: ToolsType<ToolGroups> = {
 	[TOOL_GROUPS.Binaries]: {
 		npm: {
+			name: 'npm',
 			command: 'npm',
 			versionRange: '>= 4.x',
 		},
 		Node: {
+			name: 'Node',
 			command: 'node',
 			versionRange: '>= 18',
 		},
 		Yarn: {
+			name: 'Yarn',
 			command: 'yarn',
 			versionRange: '>= 1.10.x',
 		},
 		bun: {
+			name: 'bun',
 			command: 'bun',
 			versionRange: '>= 1.0.0',
 		},
 		Watchman: {
+			name: 'Watchman',
 			command: 'watchman',
 			versionRange: '',
 		},
 	},
 	[TOOL_GROUPS.Managers]: {
 		Homebrew: {
+			name: 'Homebrew',
 			command: 'brew',
 			versionRange: '>= 4.2.20',
 		},
 		RubyGems: {
+			name: 'RubyGems',
 			command: 'gem',
 			versionRange: '>= 3.5.4',
 		},
 		CocoaPods: {
+			name: 'CocoaPods',
 			command: 'pod',
 			versionRange: '>= 1.10.0',
 		},
 	},
 	[TOOL_GROUPS.Languages]: {
 		Ruby: {
+			name: 'Ruby',
 			command: 'ruby',
 			versionRange: '>= 2.6.10',
 		},
 		Java: {
+			name: 'Java',
 			command: 'java',
 			versionRange: '>= 17 <= 20',
 		},
@@ -60,10 +70,12 @@ const TOOLS: ToolsType<ToolGroups> = {
 	//might not need ides look for sdks and ndks
 	[TOOL_GROUPS.IDEs]: {
 		Xcode: {
+			name: 'Xcode',
 			command: 'xcodebuild',
-			versionRange: '>= 15.x',
+			versionRange: '>= 15.4.x',
 		},
 		'Android Studio': {
+			name: 'Android Studio',
 			command: 'studio',
 			versionRange: '2023.2',
 		},
