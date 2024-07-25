@@ -1,18 +1,20 @@
 type EnvGroups = {
-	SDKs: 'SDKs';
-};
-
-type EnvCategoriesList = {
-	Android_SDK: 'Android_SDK';
-};
-
-type EnvTypes = {
-	[Property in keyof EnvGroups]: {
-		[Property in keyof EnvCategoriesList]: Record<
-			string,
-			Record<'path', string>
-		>;
+	SDKs: {
+		Android_SDK: {
+			ANDROID_HOME: 'ANDROID_HOME';
+			ANDROID_SDK_ROOT: 'ANDROID_SDK_ROOT';
+		};
 	};
 };
 
-export { type EnvTypes, type EnvCategoriesList, type EnvGroups };
+type EnvTypes = {
+	[K in keyof EnvGroups]: {
+		[T in keyof EnvGroups[K]]: {
+			[P in keyof EnvGroups[K][T]]: {
+				path: string;
+			};
+		};
+	};
+};
+
+export { type EnvTypes, type EnvGroups };

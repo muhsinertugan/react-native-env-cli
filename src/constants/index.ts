@@ -1,3 +1,3 @@
-import { TOOLS, TOOL_GROUPS } from './versions.js';
+import { TOOLS } from './versions.js';
 
-export { TOOLS, TOOL_GROUPS };
+export { TOOLS };

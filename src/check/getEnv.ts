@@ -1,9 +1,10 @@
-import { TOOLS, TOOL_GROUPS } from '../constants/index.js';
+import { TOOLS } from '../constants/index.js';
 import { ToolGroups } from '../types/toolTypes.js';
 import envinfo from 'envinfo';
 
+//TODO: ADD return type : Promise<UserEnvTypes>
 async function getEnv() {
-	const toolGroupsArray = Object.keys(TOOL_GROUPS);
+	const toolGroupsArray = Object.keys(TOOLS);
 
 	const config = toolGroupsArray.reduce((result, toolGroup) => {
 		const tools = Object.keys(TOOLS[toolGroup as keyof ToolGroups]);
