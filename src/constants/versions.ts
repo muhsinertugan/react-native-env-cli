@@ -1,15 +1,13 @@
-//TODO: MOVE THIS TYPE
+import { ToolsType } from '../types/toolTypes.js';
 
-import { ToolGroups, ToolsType } from '../types/toolTypes.js';
-
-const TOOL_GROUPS: ToolGroups = {
+const TOOL_GROUPS = {
 	Binaries: 'Binaries',
 	Managers: 'Managers',
 	Languages: 'Languages',
 	IDEs: 'IDEs',
-};
+} as const;
 
-const TOOLS: ToolsType<ToolGroups> = {
+const TOOLS: ToolsType = {
 	[TOOL_GROUPS.Binaries]: {
 		npm: {
 			name: 'npm',
@@ -18,11 +16,13 @@ const TOOLS: ToolsType<ToolGroups> = {
 		},
 		Node: {
 			name: 'Node',
+			brewCommand: 'node',
 			command: 'node',
 			versionRange: '>= 18',
 		},
 		Yarn: {
 			name: 'Yarn',
+			brewCommand: 'yarn',
 			command: 'yarn',
 			versionRange: '>= 1.10.x',
 		},
@@ -33,6 +33,7 @@ const TOOLS: ToolsType<ToolGroups> = {
 		},
 		Watchman: {
 			name: 'Watchman',
+			brewCommand: 'watchman',
 			command: 'watchman',
 			versionRange: '',
 		},
@@ -45,11 +46,13 @@ const TOOLS: ToolsType<ToolGroups> = {
 		},
 		RubyGems: {
 			name: 'RubyGems',
+			brewCommand: 'brew-gem',
 			command: 'gem',
 			versionRange: '>= 3.5.4',
 		},
 		CocoaPods: {
 			name: 'CocoaPods',
+			brewCommand: 'cocoapods',
 			command: 'pod',
 			versionRange: '>= 1.10.0',
 		},
@@ -57,11 +60,13 @@ const TOOLS: ToolsType<ToolGroups> = {
 	[TOOL_GROUPS.Languages]: {
 		Ruby: {
 			name: 'Ruby',
+			brewCommand: 'ruby',
 			command: 'ruby',
 			versionRange: '>= 2.6.10',
 		},
 		Java: {
 			name: 'Java',
+			brewCommand: 'openjdk',
 			command: 'java',
 			versionRange: '>= 17 <= 20',
 		},
@@ -80,33 +85,6 @@ const TOOLS: ToolsType<ToolGroups> = {
 			versionRange: '2023.2',
 		},
 	},
-	// ANDROID_SDK: 'ANDROID_SDK',
-	// ANDROID_NDK: 'ANDROID_NDK',
 };
 
-// const VERSION_RANGE = {
-// 	Binaries: {
-// 		[TOOLS.Binaries.npm.name]: '>= 4.x',
-// 		[TOOLS.Binaries.Node.name]: '>= 18',
-// 		[TOOLS.Binaries.Yarn.name]: '>= 1.10.x',
-// 		[TOOLS.Binaries.bun.name]: '>= 1.0.0',
-// 		[TOOLS.Binaries.Watchman.name]: '>= 2024.01.22.00',
-// 	},
-// 	Managers: {
-// 		[TOOLS.Managers.Homebrew.name]: '>= 4.2.20',
-// 		[TOOLS.Managers.RubyGems.name]: '>= 3.5.4',
-// 		[TOOLS.Managers.CocoaPods.name]: '>= 1.10.0',
-// 	},
-// 	Languages: {
-// 		[TOOLS.Languages.Java.name]: '>= 17 <= 20',
-// 		[TOOLS.Languages.Ruby.name]: '>= 2.6.10',
-// 	},
-// 	IDEs: {
-// 		[TOOLS.IDEs.Xcode.name]: '>= 12.x',
-// 		[TOOLS.IDEs['Android Studio'].name]: '',
-// 	},
-// 	// [TOOLS.ANDROID_SDK]: '>= 33.x',
-// 	// [TOOLS.ANDROID_NDK]: '>= 23.x',
-// } as const;
-
-export { TOOLS, TOOL_GROUPS };
+export { TOOL_GROUPS, TOOLS };
