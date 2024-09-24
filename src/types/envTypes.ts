@@ -1,8 +1,15 @@
 type EnvGroups = {
-	SDKs: {
-		Android_SDK: {
-			ANDROID_HOME: 'ANDROID_HOME';
-			ANDROID_SDK_ROOT: 'ANDROID_SDK_ROOT';
+	Android_SDK: {
+		ANDROID_HOME: {
+			path: string;
+		};
+		ANDROID_SDK_ROOT: {
+			path: string;
+		};
+	};
+	Java_JDK: {
+		JAVA_HOME: {
+			path: string;
 		};
 	};
 };
@@ -10,9 +17,7 @@ type EnvGroups = {
 type EnvTypes = {
 	[K in keyof EnvGroups]: {
 		[T in keyof EnvGroups[K]]: {
-			[P in keyof EnvGroups[K][T]]: {
-				path: string;
-			};
+			path: string;
 		};
 	};
 };
