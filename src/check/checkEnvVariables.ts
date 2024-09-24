@@ -1,6 +1,6 @@
 import lodash from 'lodash';
-import { ENV_VARIABLES } from '../constants/envVariables.js';
-import { EnvGroups } from '../types/envTypes.js';
+import { ENV_VARIABLES } from '../constants/index.js';
+
 /**
  * TODO:we need to check if they are correct, we need to set these variables in some state if they are not correct
  */
@@ -17,7 +17,8 @@ function checkEnvVariables() {
 					 * !!Not everything is under Home find a wat to include all types of env things
 					 */
 					const checkEnvItem =
-						`${process.env['HOME']}${value.path}` === userEnvPath;
+						`${process.env['HOME']}${(value as { path: string }).path}` ===
+						userEnvPath;
 
 					lodash.set(
 						userEnvVariables,
