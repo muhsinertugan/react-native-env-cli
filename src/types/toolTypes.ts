@@ -2,7 +2,7 @@ import { TOOL_GROUPS } from '../constants/versions.js';
 
 type ToolGroups = (typeof TOOL_GROUPS)[keyof typeof TOOL_GROUPS];
 
-type ToolDefinition = {
+export type ToolDefinition = {
 	name: string;
 	command: string;
 	versionRange: string;
