@@ -15,7 +15,7 @@ function checkEnvVariables() {
 			Object.entries(envGroupValue[key as keyof typeof envGroupValue]).forEach(
 				([item, value]) => {
 					const userEnvPath = process.env[item];
-					const expectedPath = (value as { path: string }).path;
+					const expectedPath = (value as { path?: string })?.path || '';
 
 					const fullExpectedPath = expectedPath.startsWith('~')
 						? expectedPath.replace('~', process.env.HOME || '')
