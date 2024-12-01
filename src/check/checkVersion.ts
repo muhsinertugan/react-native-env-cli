@@ -1,54 +1,75 @@
+import { exec } from 'child_process';
 import commandExists from 'command-exists';
 import semver from 'semver';
 import { TOOLS } from '../constants/versions.js';
-import { ToolGroups } from '../types/toolTypes.js';
 import { getEnv } from './getEnv.js';
 
 async function checkVersion() {
 	const userEnv = await getEnv();
-
-	const results = {};
+	const results: Record<string, boolean> = {};
 
 	await Promise.all(
-		Object.entries(userEnv).map(async ([toolGroup, _toolInfo]) => {
-			for (const key in TOOLS[toolGroup as keyof ToolGroups]) {
+		Object.entries(userEnv).map(async ([toolGroup, toolInfo]) => {
+			const tools = TOOLS[toolGroup as keyof typeof TOOLS];
+			if (!tools) return;
+
+			for (const key in tools) {
 				try {
-					const exists = await commandExists(
-						TOOLS[toolGroup as keyof ToolGroups][key]!.command
-					);
+					// Special handling for Android Studio
+					if (key === 'Android Studio') {
+						// On macOS
+						const macPath = '/Applications/Android Studio.app';
+						// On Windows
+						const winPath = 'C:\\Program Files\\Android\\Android Studio';
+
+						const exists = await new Promise((resolve) => {
+							exec('android studio -version', (error) => {
+								if (error) {
+									// Try checking if the directory exists instead
+									import('fs').then((fs) => {
+										resolve(fs.existsSync(macPath) || fs.existsSync(winPath));
+									});
+								} else {
+									resolve(true);
+								}
+							});
+						});
+
+						results[key] = exists as boolean;
+						continue;
+					}
+
+					const toolConfig = tools[key];
+					if (!toolConfig) continue;
+
+					const exists = await commandExists(toolConfig.command);
 
 					if (exists) {
-						/**
-						 * This check needed to be done to comply xCode version to semver.
-						 */
-						if (key === TOOLS.IDEs.Xcode?.name) {
-							const userXcodeVersion: string = `${
-								userEnv[toolGroup][key].version.split('/')[0]
-							}.0`;
+						const toolGroupInfo = toolInfo[key];
+						if (!toolGroupInfo) continue;
 
+						if (key === TOOLS.IDEs.Xcode?.name) {
+							const userXcodeVersion = `${
+								toolGroupInfo.version.split('/')[0]
+							}.0`;
 							const satisfies = semver.satisfies(
 								userXcodeVersion,
-								TOOLS[toolGroup as keyof ToolGroups][key]!.versionRange
+								toolConfig.versionRange
 							);
-
-							(results as Record<string, boolean>)[key] = satisfies;
+							results[key] = satisfies;
 						} else if (key === TOOLS.Binaries.Watchman?.name) {
-							/**
-							 * Watchman does not produce a semver compliant versioning.
-							 * If watchman exist in any version it will pass the check.
-							 */
-							(results as Record<string, boolean>)[key] = true;
+							results[key] = true;
 						} else {
 							const satisfies = semver.satisfies(
-								userEnv[toolGroup][key].version,
-								TOOLS[toolGroup as keyof ToolGroups][key]!.versionRange
+								toolGroupInfo.version,
+								toolConfig.versionRange
 							);
-
-							(results as Record<string, boolean>)[key] = satisfies;
+							results[key] = satisfies;
 						}
 					}
 				} catch (error) {
 					console.log(error);
+					results[key] = false;
 				}
 			}
 		})
