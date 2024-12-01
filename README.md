@@ -93,7 +93,7 @@ bun run test
 
 ## License
 
-MIT License. See the LICENSE file for more details.
+MIT License. See the [LICENSE](LICENSE) file for more details.
 
 ## Dependencies
 
