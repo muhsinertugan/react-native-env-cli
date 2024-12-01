@@ -1,6 +1,11 @@
 import { exec } from 'child_process';
+import type { ToolDefinition } from '../types/toolTypes.js';
 
-async function installTool(tool) {
+async function installTool(tool: ToolDefinition): Promise<string> {
+	if (!tool.brewCommand) {
+		throw new Error(`No brew command found for ${tool.name}`);
+	}
+
 	return new Promise((resolve, reject) => {
 		exec(
 			`brew install ${tool.brewCommand}`,
