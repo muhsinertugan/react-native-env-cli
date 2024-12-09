@@ -4,8 +4,8 @@
 		"setup-env": "./dist/index.js"
 	},
 	"type": "module",
-	"version": "0.0.0",
-	"description": "",
+	"version": "1.0.0",
+	"description": "A CLI tool for setting up React Native development environments",
 	"main": "index.js",
 	"scripts": {
 		"link-cli": "bun unlink && bun link",
@@ -17,9 +17,23 @@
 		"lint": "eslint src/**/*.ts",
 		"format": "prettier --write src/**/*.ts"
 	},
-	"keywords": [],
-	"author": "",
-	"license": "ISC",
+	"keywords": [
+		"react-native",
+		"cli",
+		"environment",
+		"setup",
+		"development"
+	],
+	"author": "Muhsin Ertuğan <muhsin.ertugan@gmail.com> (https://github.com/muhsinertugan)",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/muhsinertugan/react-native-env-cli.git"
+	},
+	"bugs": {
+		"url": "https://github.com/muhsinertugan/react-native-env-cli/issues"
+	},
+	"homepage": "https://github.com/muhsinertugan/react-native-env-cli#readme",
 	"devDependencies": {
 		"@types/bun": "latest",
 		"@types/command-exists": "^1.2.3",
