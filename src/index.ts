@@ -27,23 +27,42 @@ program
 	.version('0.0.1')
 	.action(async () => {
 		try {
+			// Add signal handling at the start of the action
+			process.on('SIGINT', () => {
+				console.log(chalk.yellow('\nSetup cancelled by user'));
+				process.exit(0);
+			});
+
 			console.log(chalk.green('Welcome to the setup-env CLI!'));
 
-			const { checksToRun } = await inquirer.prompt<
-				Pick<PromptResults, 'checksToRun'>
-			>([
-				{
-					type: 'checkbox',
-					name: 'checksToRun',
-					message: 'Select which checks to perform:',
-					choices: [
-						{ name: 'Version Check', value: 'version', checked: true },
-						{ name: 'Environment Variables', value: 'env', checked: true },
-						{ name: 'Virtual Devices', value: 'devices', checked: true },
-						{ name: 'Homebrew', value: 'brew', checked: true },
-					],
-				},
-			]);
+			let checksToRun: string[] = [];
+			try {
+				const result = await inquirer.prompt<
+					Pick<PromptResults, 'checksToRun'>
+				>([
+					{
+						type: 'checkbox',
+						name: 'checksToRun',
+						message: 'Select which checks to perform:',
+						choices: [
+							{ name: 'Version Check', value: 'version', checked: true },
+							{ name: 'Environment Variables', value: 'env', checked: true },
+							{ name: 'Virtual Devices', value: 'devices', checked: true },
+							{ name: 'Homebrew', value: 'brew', checked: true },
+						],
+					},
+				]);
+				checksToRun = result.checksToRun;
+			} catch (error) {
+				if (
+					error instanceof Error &&
+					error.message.includes('User force closed')
+				) {
+					console.log(chalk.yellow('\nSetup cancelled by user'));
+					process.exit(0);
+				}
+				throw error;
+			}
 
 			const CHECK_CONFIG = {
 				version: {
